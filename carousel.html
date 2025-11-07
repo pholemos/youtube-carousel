@@ -10,7 +10,7 @@
 html,body{height:100%;margin:0;background:#0a0a0a;font-family:Inter,Arial,sans-serif}
 .wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box}
 .stage{perspective:1200px;width:100%;max-width:1250px;height:520px;display:flex;align-items:center;justify-content:center;position:relative}
-.carousel{display:flex;align-items:center;justify-content:center;gap:22px;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.22,.95,.35,1);padding:12px}
+.carousel{display:flex;align-items:center;justify-content:flex-start;gap:22px;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.22,.95,.35,1);padding:12px}
 .card{width:320px;min-width:320px;background:#111;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06);box-shadow:0 8px 30px rgba(0,0,0,.7);cursor:pointer;display:flex;flex-direction:column;transform-origin:center;transition:transform .6s,opacity .35s}
 .thumb{width:100%;height:182px;object-fit:cover;background:#222;loading:lazy}
 .meta{padding:12px 14px;color:#ededed;display:flex;flex-direction:column;gap:8px}
@@ -65,7 +65,34 @@ const dot=document.createElement("div");dot.className="dot";dots.appendChild(dot
 items.push(a);}
 if(items.length===0){car.innerHTML="<div style='color:#f88;padding:18px'>No videos found.</div>";return;}
 let current=0;
-function render(){items.forEach((c,i)=>{c.classList.remove("center","side","out");if(i===current)c.classList.add("center");else if(i===current-1||i===current+1){c.classList.add("side");c.style.setProperty("--ry",i<current?"-12deg":"12deg");}else{c.classList.add("out");c.style.setProperty("--ry",i<current?"-22deg":"22deg");}});[...dots.children].forEach((d,i)=>d.classList.toggle("active",i===current));car.style.transform='translateX('+(-current*340)+'px)';}
+
+function render(){
+  const stageWidth = car.parentElement.offsetWidth;
+  const cardWidth = items[0].offsetWidth + 22; // 22 = gap
+  const totalWidth = cardWidth * items.length;
+  const centerOffset = (stageWidth - cardWidth)/2;
+  
+  items.forEach((c,i)=>{
+    c.classList.remove("center","side","out");
+    if(i===current)c.classList.add("center");
+    else if(i===current-1||i===current+1){
+      c.classList.add("side");
+      c.style.setProperty("--ry",i<current?"-12deg":"12deg");
+    }else{
+      c.classList.add("out");
+      c.style.setProperty("--ry",i<current?"-22deg":"22deg");
+    }
+  });
+  
+  [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===current));
+  
+  // Center current card properly
+  let x = -current*cardWidth + centerOffset;
+  // prevent over-scrolling at the ends
+  x = Math.min(0, Math.max(x, stageWidth - totalWidth));
+  car.style.transform = 'translateX(' + x + 'px)';
+}
+
 render();
 document.querySelector(".prev").onclick=()=>{current=(current-1+items.length)%items.length;render();};
 document.querySelector(".next").onclick=()=>{current=(current+1)%items.length;render();};

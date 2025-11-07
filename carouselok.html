@@ -11,7 +11,145 @@ body {
   background: #0a0a0a;
 }
 .gallery {
-  max-width: 1000px;
+  max-width: 1000px;<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DIY Made Easy — Video Carousel</title>
+<style>
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #0a0a0a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.stage {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.carousel {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.5s cubic-bezier(.22,.95,.35,1);
+}
+.card {
+  min-width: 320px;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s;
+}
+.card.center {
+  transform: scale(1.05);
+}
+.btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+.btn:hover {
+  background: rgba(229,9,20,0.8);
+}
+.btn.prev { left: -60px; }
+.btn.next { right: -60px; }
+@media(max-width: 768px){
+  .stage { height: 200px; }
+  .card { min-width: 80vw; height: auto; aspect-ratio: 16/9; }
+  .btn.prev { left: 5px; }
+  .btn.next { right: 5px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <button class="btn prev">◀</button>
+  <div class="carousel" id="carousel"></div>
+  <button class="btn next">▶</button>
+</div>
+
+<script>
+const videos = [
+  "https://youtu.be/j2kl1R_49g8","https://youtu.be/wHB64ogF-E4","https://youtu.be/cSwrO25ETmI",
+  "https://youtu.be/bAbw6YLXkVo","https://youtu.be/kW17STBqhak","https://youtu.be/nkNrOEl8foc",
+  "https://youtu.be/G0nUe95ThfY","https://youtu.be/EZtHFyZEWok","https://youtu.be/brZZNT_mrnY",
+  "https://youtu.be/-4TawU1TiMk","https://youtu.be/MpverOmA6Ug","https://youtu.be/Jtxw6cWn2eg",
+  "https://youtu.be/bPlX7LCNS0Y","https://youtu.be/IdtcyMCETN4","https://youtu.be/_2BRnh1LF6A"
+];
+
+function vidID(url){
+  try { const u = new URL(url); if(u.hostname.includes("youtu.be")) return u.pathname.slice(1); return u.searchParams.get("v"); }
+  catch { const m = url.match(/(?:v=|\/)([A-Za-z0-9_-]{6,})/); return m ? m[1] : null; }
+}
+
+const carousel = document.getElementById("carousel");
+const items = [];
+videos.forEach(url=>{
+  const id = vidID(url);
+  const div = document.createElement("a");
+  div.className = "card";
+  div.href = url;
+  div.target="_blank";
+  div.style.backgroundImage = `url('https://i.ytimg.com/vi/${id}/hqdefault.jpg')`;
+  carousel.appendChild(div);
+  items.push(div);
+});
+
+let current = 0;
+function render(){
+  const stageWidth = carousel.parentElement.offsetWidth;
+  const cardWidth = items[0].offsetWidth + 16; // gap
+  const centerOffset = (stageWidth - items[0].offsetWidth)/2;
+  items.forEach((c,i)=>{
+    c.classList.remove("center");
+    if(i===current) c.classList.add("center");
+  });
+  let x = centerOffset - current*cardWidth;
+  const maxTranslate = 0;
+  const minTranslate = Math.min(stageWidth - (cardWidth*items.length - 16),0);
+  x = Math.max(Math.min(x, maxTranslate), minTranslate);
+  carousel.style.transform = `translateX(${x}px)`;
+}
+
+render();
+
+document.querySelector(".prev").onclick = ()=>{ current = Math.max(current-1,0); render(); };
+document.querySelector(".next").onclick = ()=>{ current = Math.min(current+1,items.length-1); render(); };
+
+// Touch support
+let sx=0;
+carousel.addEventListener("touchstart", e=> sx = e.touches[0].clientX );
+carousel.addEventListener("touchend", e=>{
+  const dx = e.changedTouches[0].clientX - sx;
+  if(Math.abs(dx) > 40){ if(dx<0) document.querySelector(".next").click(); else document.querySelector(".prev").click(); }
+});
+</script>
+
+</body>
+</html>
+
   margin: 40px auto;
   display: flex;
   flex-direction: column;

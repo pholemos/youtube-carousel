@@ -36,7 +36,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 2px;
+  gap: 22px;
   transform-style: preserve-3d;
   transition: transform .8s cubic-bezier(.22,.95,.35,1);
 }
@@ -170,7 +170,7 @@ let current=0;
 function render(){
   const stageWidth = car.parentElement.offsetWidth;
   const cardWidth = items[0].offsetWidth;
-  const gap = parseInt(getComputedStyle(car).gap) || 22;
+  const gap = parseInt(getComputedStyle(car).gap) || 2;
   const totalWidth = (cardWidth + gap) * items.length - gap;
   const centerOffset = (stageWidth - cardWidth)/2;
 

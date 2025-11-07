@@ -178,12 +178,12 @@ function render(){
     c.classList.remove("center","side","out");
     if(i===current)c.classList.add("center");
     else if(i===current-1||i===current+1){ c.classList.add("side"); c.style.setProperty("--ry",i<current?"-12deg":"12deg"); } 
-    else { c.classList.add("out"); c.style.setProperty("--ry",i<current?"-22deg":"22deg"); }
+    else { c.classList.add("out"); c.style.setProperty("--ry",i<current?"-2deg":"2deg"); }
   });
 
   let x = -current * (cardWidth + gap) + centerOffset;
-  const maxTranslate = 0;
-  const minTranslate = Math.min(stageWidth - totalWidth, 0);
+  const maxTranslate = 7;
+  const minTranslate = Math.min(stageWidth - totalWidth, 7);
   x = Math.max(Math.min(x, maxTranslate), minTranslate);
   car.style.transform = 'translateX(' + x + 'px)';
 }

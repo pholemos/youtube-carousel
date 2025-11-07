@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://www.youtube.com">
 <style>
 html,body{height:100%;margin:0;background:#0a0a0a;font-family:Inter,Arial,sans-serif}
-.wrap{width:100%;height:100%;display:flex;align-items:left;justify-content:left;padding:24px;box-sizing:border-box}
+.wrap{width:100%;height:100%;display:flex;align-items:right;justify-content:right;padding:24px;box-sizing:border-box}
 .stage{perspective:1200px;width:100%;max-width:1250px;height:520px;display:flex;align-items:center;justify-content:center;position:relative}
 .carousel{display:flex;align-items:center;justify-content:flex-start;gap:22px;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.22,.95,.35,1);padding:12px}
 .card{width:320px;min-width:320px;background:#111;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06);box-shadow:0 8px 30px rgba(0,0,0,.7);cursor:pointer;display:flex;flex-direction:column;transform-origin:center;transition:transform .6s,opacity .35s}
@@ -74,7 +74,7 @@ function render(){
   
   items.forEach((c,i)=>{
     c.classList.remove("center","side","out");
-    if(i===current)c.classList.add("right");
+    if(i===current)c.classList.add("center");
     else if(i===current-1||i===current+1){
       c.classList.add("side");
       c.style.setProperty("--ry",i<current?"-12deg":"12deg");

@@ -52,7 +52,7 @@ const videoUrls = [
 ];
 function vid(url){try{const u=new URL(url);if(u.hostname.includes("youtu.be"))return u.pathname.slice(1);return u.searchParams.get("v");}catch{const m=url.match(/(?:v=|\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:null;}}
 function thumb(id){return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg";}
-async function title(url){try{const cacheKey="ytTitle_"+vid(url);const cached=localStorage.getItem(cacheKey);if(cached){const stored=JSON.parse(cached);if(Date.now()-stored.t<24*3600*1000)return stored.v;}const r=await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(url)+"&format=json");if(!r.ok)throw 0;const j=await r.json();localStorage.setItem(cacheKey,JSON.stringify({v:j.title||"YouTube Video",t:Date.now()}));return j.title||"YouTube Video";}catch{return "YouTube Video";}}
+async function title(url){try{const r=await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(url)+"&format=json");if(!r.ok)throw 0;const j=await r.json();return j.title||"YouTube Video";}catch{return "YouTube Video";}}
 function desc(t){return t.split("-")[0].trim()+": a short, practical tutorial.";}
 (async function build(){
 const car=document.getElementById("car");const dots=document.getElementById("dots");const items=[];

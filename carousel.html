@@ -31,7 +31,6 @@ html, body {
   align-items: center;
   justify-content: center;
   position: relative;
-  padding-bottom: 60px; /* extra space for dots */
 }
 .carousel {
   display: flex;
@@ -100,61 +99,40 @@ html, body {
   opacity: .50;
   filter: blur(.2px);
 }
-.controls {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 14px;
-  z-index: 20;
-  align-items: center;
-}
 .btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.12);
   color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 12px 18px;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
+  z-index: 10;
 }
 .btn:hover {
   border-color: #e50914;
   box-shadow: 0 0 14px rgba(229,9,20,.22);
 }
-.dots {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.dot {
-  width: 10px;
-  height: 10px;
-  background: rgba(255,255,255,.07);
-  border-radius: 50%;
-  cursor: pointer;
-}
-.dot.active {
-  background: #e50914;
-  box-shadow: 0 0 12px rgba(229,9,20,.22);
-}
+.btn.prev { left: -50px; }
+.btn.next { right: -50px; }
 @media (max-width:900px){
   .card { width: 86vw; min-width: 86vw; }
-  .stage { height: 420px; padding-bottom: 60px; }
+  .stage { height: 420px; }
   .carousel { gap: 12px; }
+  .btn.prev { left: 5px; }
+  .btn.next { right: 5px; }
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="stage" role="region" aria-label="YouTube carousel">
+  <div class="stage">
     <div class="carousel" id="car"></div>
-    <div class="controls" aria-hidden="false">
-      <button class="btn prev" aria-label="Previous">◀</button>
-      <div class="dots" id="dots" role="tablist"></div>
-      <button class="btn next" aria-label="Next">▶</button>
-    </div>
+    <button class="btn prev" aria-label="Previous">◀</button>
+    <button class="btn next" aria-label="Next">▶</button>
   </div>
 </div>
 
@@ -169,36 +147,24 @@ const videoUrls = [
 ];
 
 function vid(url){
-  try {
-    const u = new URL(url);
-    if(u.hostname.includes("youtu.be")) return u.pathname.slice(1);
-    return u.searchParams.get("v");
-  } catch {
-    const m = url.match(/(?:v=|\/)([A-Za-z0-9_-]{6,})/);
-    return m ? m[1] : null;
-  }
+  try { const u = new URL(url); if(u.hostname.includes("youtu.be")) return u.pathname.slice(1); return u.searchParams.get("v"); } 
+  catch { const m = url.match(/(?:v=|\/)([A-Za-z0-9_-]{6,})/); return m ? m[1] : null; }
 }
 function thumb(id){return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg";}
 async function title(url){
-  try {
-    const r = await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(url)+"&format=json");
-    if(!r.ok) throw 0;
-    const j = await r.json();
-    return j.title || "YouTube Video";
-  } catch { return "YouTube Video"; }
+  try { const r = await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(url)+"&format=json"); if(!r.ok) throw 0; const j = await r.json(); return j.title||"YouTube Video"; } 
+  catch { return "YouTube Video"; }
 }
 function desc(t){return t.split("-")[0].trim()+": a short, practical tutorial.";}
 
 (async function build(){
-const car=document.getElementById("car");const dots=document.getElementById("dots");const items=[];
+const car=document.getElementById("car"); const items=[];
 for(const url of videoUrls){
-const id=vid(url);if(!id)continue;const t=await title(url);const d=desc(t);
-const a=document.createElement("a");a.className="card";a.href=url;a.target="_blank";a.rel="noopener noreferrer";
+const id=vid(url); if(!id) continue; const t=await title(url); const d=desc(t);
+const a=document.createElement("a"); a.className="card"; a.href=url; a.target="_blank"; a.rel="noopener noreferrer";
 a.innerHTML='<img class="thumb" src="'+thumb(id)+'" alt="'+(t.replace(/"/g,""))+'"><div class="meta"><div class="title">'+t+'</div><div class="desc">'+d+'</div><div class="sub">Watch on YouTube ▶</div></div>';
-car.appendChild(a);
-const dot=document.createElement("div");dot.className="dot";dots.appendChild(dot);
-items.push(a);}
-if(items.length===0){car.innerHTML="<div style='color:#f88;padding:18px'>No videos found.</div>";return;}
+car.appendChild(a); items.push(a);}
+if(items.length===0){car.innerHTML="<div style='color:#f88;padding:18px'>No videos found.</div>"; return;}
 let current=0;
 
 function render(){
@@ -211,16 +177,9 @@ function render(){
   items.forEach((c,i)=>{
     c.classList.remove("center","side","out");
     if(i===current)c.classList.add("center");
-    else if(i===current-1||i===current+1){
-      c.classList.add("side");
-      c.style.setProperty("--ry",i<current?"-12deg":"12deg");
-    } else {
-      c.classList.add("out");
-      c.style.setProperty("--ry",i<current?"-22deg":"22deg");
-    }
+    else if(i===current-1||i===current+1){ c.classList.add("side"); c.style.setProperty("--ry",i<current?"-12deg":"12deg"); } 
+    else { c.classList.add("out"); c.style.setProperty("--ry",i<current?"-22deg":"22deg"); }
   });
-
-  [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===current));
 
   let x = -current * (cardWidth + gap) + centerOffset;
   const maxTranslate = 0;
@@ -232,19 +191,14 @@ function render(){
 render();
 document.querySelector(".prev").onclick=()=>{current=(current-1+items.length)%items.length;render();};
 document.querySelector(".next").onclick=()=>{current=(current+1)%items.length;render();};
-[...dots.children].forEach((d,i)=>d.onclick=()=>{current=i;render();});
 
 // touch support
 let sx=0;
 car.addEventListener("touchstart",e=>sx=e.touches[0].clientX);
 car.addEventListener("touchend",e=>{
   const dx=e.changedTouches[0].clientX-sx;
-  if(Math.abs(dx)>40){if(dx<0)document.querySelector(".next").click();else document.querySelector(".prev").click();}
+  if(Math.abs(dx)>40){ if(dx<0) document.querySelector(".next").click(); else document.querySelector(".prev").click(); }
 });
-
-function sendHeight(){parent.postMessage({height:document.body.scrollHeight},"*");}
-setTimeout(sendHeight,500);
-window.addEventListener('resize',sendHeight);
 
 })();
 })();

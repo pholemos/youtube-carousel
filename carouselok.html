@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>DIY Made Easy — Carousel</title>
+<title>DIY Made Easy — Centered Carousel</title>
 <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
 <link rel="preconnect" href="https://www.youtube.com">
 <style>
@@ -14,8 +14,8 @@ html, body {
   font-family: Inter, Arial, sans-serif;
 }
 .wrap {
-  width: 70%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@ html, body {
 }
 .stage {
   perspective: 1200px;
-  width: 70%;
+  width: 100%;
   max-width: 1250px;
   height: 520px;
   display: flex;
@@ -35,7 +35,6 @@ html, body {
 .carousel {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 22px;
   transform-style: preserve-3d;
   transition: transform .8s cubic-bezier(.22,.95,.35,1);
@@ -170,22 +169,19 @@ let current=0;
 function render(){
   const stageWidth = car.parentElement.offsetWidth;
   const cardWidth = items[0].offsetWidth;
-  const gap = parseInt(getComputedStyle(car).gap) || 2;
-  const totalWidth = (cardWidth + gap) * items.length - gap;
-  const centerOffset = (stageWidth - cardWidth)/2;
+  const gap = parseInt(getComputedStyle(car).gap) || 22;
 
   items.forEach((c,i)=>{
     c.classList.remove("center","side","out");
     if(i===current)c.classList.add("center");
     else if(i===current-1||i===current+1){ c.classList.add("side"); c.style.setProperty("--ry",i<current?"-12deg":"12deg"); } 
-    else { c.classList.add("out"); c.style.setProperty("--ry",i<current?"-2deg":"2deg"); }
+    else { c.classList.add("out"); c.style.setProperty("--ry",i<current?"-22deg":"22deg"); }
   });
 
-  let x = -current * (cardWidth + gap) + centerOffset;
-  const maxTranslate = 7;
-  const minTranslate = Math.min(stageWidth - totalWidth, 7);
-  x = Math.max(Math.min(x, maxTranslate), minTranslate);
-  car.style.transform = 'translateX(' + x + 'px)';
+  // Perfectly center the current card
+  const centerX = stageWidth/2 - cardWidth/2;
+  const x = -current * (cardWidth + gap) + centerX;
+  car.style.transform = `translateX(${x}px)`;
 }
 
 render();

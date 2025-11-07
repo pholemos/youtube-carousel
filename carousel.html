@@ -31,16 +31,15 @@ html, body {
   align-items: center;
   justify-content: center;
   position: relative;
-  padding-bottom: 50px; /* prevent dots from being cut */
+  padding-bottom: 60px; /* extra space for dots */
 }
 .carousel {
   display: flex;
-  align-items: right;
+  align-items: center;
   justify-content: flex-start;
   gap: 22px;
   transform-style: preserve-3d;
   transition: transform .8s cubic-bezier(.22,.95,.35,1);
-  padding: 12px;
 }
 .card {
   width: 320px;
@@ -109,6 +108,7 @@ html, body {
   display: flex;
   gap: 14px;
   z-index: 20;
+  align-items: center;
 }
 .btn {
   background: rgba(255,255,255,.06);
@@ -141,7 +141,7 @@ html, body {
 }
 @media (max-width:900px){
   .card { width: 86vw; min-width: 86vw; }
-  .stage { height: 420px; padding-bottom: 50px; }
+  .stage { height: 420px; padding-bottom: 60px; }
   .carousel { gap: 12px; }
 }
 </style>
@@ -167,6 +167,7 @@ const videoUrls = [
 "https://youtu.be/-4TawU1TiMk","https://youtu.be/MpverOmA6Ug","https://youtu.be/Jtxw6cWn2eg",
 "https://youtu.be/bPlX7LCNS0Y","https://youtu.be/IdtcyMCETN4","https://youtu.be/_2BRnh1LF6A"
 ];
+
 function vid(url){
   try {
     const u = new URL(url);
@@ -202,38 +203,10 @@ let current=0;
 
 function render(){
   const stageWidth = car.parentElement.offsetWidth;
-  const cardWidth = items[0].offsetWidth + 22; // 22 = gap
-  const totalWidth = cardWidth * items.length;
-  const centerOffset = (stageWidth - cardWidth)/2;
-
-  items.forEach((c,i)=>{
-    c.classList.remove("center","side","out");
-    if(i===current)c.classList.add("center");
-    else if(i===current-1||i===current+1){
-      c.classList.add("side");
-      c.style.setProperty("--ry",i<current?"-12deg":"12deg");
-    }else{
-      c.classList.add("out");
-      c.style.setProperty("--ry",i<current?"-22deg":"22deg");
-    }
-  });
-
-  [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===current));
-
-  let x = -current*cardWidth + centerOffset;
-  const maxTranslate = 0;
-  const minTranslate = Math.min(stageWidth - totalWidth, 0);
-  x = Math.max(Math.min(x, maxTranslate), minTranslate);
-
-  car.style.transform = 'translateX(' + x + 'px)';
-}
-
-function render(){
-  const stageWidth = car.parentElement.offsetWidth;
   const cardWidth = items[0].offsetWidth;
-  const gap = 22;
+  const gap = parseInt(getComputedStyle(car).gap) || 22;
   const totalWidth = (cardWidth + gap) * items.length - gap;
-  const centerOffset = (stageWidth - cardWidth) / 2;
+  const centerOffset = (stageWidth - cardWidth)/2;
 
   items.forEach((c,i)=>{
     c.classList.remove("center","side","out");
@@ -249,18 +222,29 @@ function render(){
 
   [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===current));
 
-  // Calculate translateX properly including gaps
   let x = -current * (cardWidth + gap) + centerOffset;
   const maxTranslate = 0;
   const minTranslate = Math.min(stageWidth - totalWidth, 0);
   x = Math.max(Math.min(x, maxTranslate), minTranslate);
-
   car.style.transform = 'translateX(' + x + 'px)';
-
-  // Center dots below the current card
-  const dotsEl = document.getElementById("dots");
-  dotsEl.style.transform = `translateX(${centerOffset}px)`;
 }
+
+render();
+document.querySelector(".prev").onclick=()=>{current=(current-1+items.length)%items.length;render();};
+document.querySelector(".next").onclick=()=>{current=(current+1)%items.length;render();};
+[...dots.children].forEach((d,i)=>d.onclick=()=>{current=i;render();});
+
+// touch support
+let sx=0;
+car.addEventListener("touchstart",e=>sx=e.touches[0].clientX);
+car.addEventListener("touchend",e=>{
+  const dx=e.changedTouches[0].clientX-sx;
+  if(Math.abs(dx)>40){if(dx<0)document.querySelector(".next").click();else document.querySelector(".prev").click();}
+});
+
+function sendHeight(){parent.postMessage({height:document.body.scrollHeight},"*");}
+setTimeout(sendHeight,500);
+window.addEventListener('resize',sendHeight);
 
 })();
 })();

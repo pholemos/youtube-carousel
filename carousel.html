@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,25 +11,21 @@
         #slider {
             will-change: transform;
         }
-
         .video-thumb-container {
             position: relative;
             cursor: pointer;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
             background-color: #000;
         }
-
         .video-thumb-container img {
-            position: absolute;
+             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
         .play-icon {
             position: absolute;
             top: 50%;
@@ -37,27 +33,23 @@
             transform: translate(-50%, -50%);
             width: 60px;
             height: 60px;
-            background-color: rgba(0, 0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0.8;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            pointer-events: none;
-            /* Allows clicks to pass through to the link */
+            pointer-events: none; /* Allows clicks to pass through to the link */
         }
-
         .video-thumb-link:hover .play-icon {
             opacity: 1;
-            transform: translate(-50%, -50%) scale(3);
+            transform: translate(-50%, -50%) scale(1.1);
         }
-
         /* Style for the main active thumbnail */
-        .video-thumb-link.md\:scale-10 .play-icon {
-            opacity: 1;
+        .video-thumb-link.md\:scale-110 .play-icon {
+             opacity: 1;
         }
-
         .play-icon svg {
             fill: white;
             width: 30px;
@@ -66,30 +58,25 @@
         }
     </style>
 </head>
-
-<body class="bg-gray-900 text-white font-sans antialiased flex items-center justify-center min-h-screen">
+<body class="bg-black text-white font-sans antialiased flex items-center justify-center min-h-screen">
 
     <div class="w-full max-w-6xl mx-auto px-4 py-8">
-        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8 text-white tracking-wide">YOUTUBE VIDEOS</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8 text-white tracking-wide">Video Showcase</h1>
         <div id="carousel-container" class="relative">
-            <div class="overflow-hidden rounded-lg">
+            <div class="overflow-hidden md:py-5">
                 <div id="slider" class="flex items-center transition-transform duration-500 ease-in-out">
                     <!-- Video thumbnails will be injected here by JavaScript -->
                 </div>
             </div>
-
+            
             <!-- Navigation Buttons -->
-            <button id="prev-btn" aria-label="Previous videos"
-                class="absolute top-1/2 left-0 md:-left-6 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
+            <button id="prev-btn" aria-label="Previous videos" class="absolute top-1/2 left-0 md:-left-6 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
-            <button id="next-btn" aria-label="Next videos"
-                class="absolute top-1/2 right-0 md:-right-6 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
+            <button id="next-btn" aria-label="Next videos" class="absolute top-1/2 right-0 md:-right-6 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
@@ -97,7 +84,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const videoUrls = [
                 'https://youtu.be/j2kl1R_49g8',
                 'https://youtu.be/wHB64ogF-E4',
@@ -125,14 +112,14 @@
                     } else if (urlObj.hostname.includes('youtube.com')) {
                         videoId = urlObj.searchParams.get('v');
                     }
-                } catch (e) {
+                } catch(e) {
                     console.error("Error parsing URL:", url, e);
                     return null;
                 }
                 const regex = /^[a-zA-Z0-9_-]{11}$/;
                 return regex.test(videoId) ? videoId : null;
             }
-
+            
             const slider = document.getElementById('slider');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -146,7 +133,8 @@
                 if (videoId) {
                     const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
                     const slideItem = document.createElement('div');
-                    slideItem.className = 'w-full md:w-1/3 flex-shrink-0 p-2 box-border';
+                    // Use px-[5px] to create a 10px gap between items (5px padding on each side)
+                    slideItem.className = 'w-full md:w-1/3 flex-shrink-0 px-[5px] box-border';
                     slideItem.innerHTML = `
                         <a href="${url}" target="_blank" rel="noopener noreferrer" class="video-thumb-link block rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 ease-in-out transform">
                             <div class="video-thumb-container">
@@ -164,21 +152,26 @@
             function updateCarousel(direction) {
                 const isDesktop = window.innerWidth >= 768;
                 const itemsPerPage = isDesktop ? 3 : 1;
-                const maxIndex = totalItems - itemsPerPage;
-
-                currentIndex += direction;
-
-                // Handle carousel rotation
-                if (currentIndex > maxIndex) {
-                    currentIndex = 0;
-                }
-                if (currentIndex < 0) {
-                    currentIndex = maxIndex;
-                }
-
                 const itemWidthPercent = 100 / itemsPerPage;
-                const offset = -currentIndex * itemWidthPercent;
+                
+                // For this logic, we slide one item at a time.
+                const itemsToSlide = 1;
+                const potentialIndex = currentIndex + (direction * itemsToSlide);
+                
+                // Carousel rotation logic
+                if (potentialIndex >= totalItems) {
+                    currentIndex = 0;
+                } else if (potentialIndex < 0) {
+                     // When going back from the first item, go to the last item.
+                    currentIndex = totalItems -1;
+                } else {
+                    currentIndex = potentialIndex;
+                }
+                
+                // Calculate the visual center for scaling effect on desktop
+                const centerIndexOnScreen = isDesktop ? Math.floor(currentIndex) : currentIndex;
 
+                const offset = -currentIndex * itemWidthPercent;
                 slider.style.transform = `translateX(${offset}%)`;
 
                 // Apply scaling and opacity effects
@@ -186,56 +179,112 @@
                 for (let i = 0; i < slideItems.length; i++) {
                     const link = slideItems[i].querySelector('.video-thumb-link');
                     if (!link) continue;
-
-                    // Reset styles applied by this function
-                    link.classList.remove('md:scale-110', 'md:opacity-60', 'z-10');
+                    
+                    link.classList.remove('md:scale-110', 'md:opacity-50', 'z-10');
+                    link.classList.add('md:opacity-100'); // Reset opacity first
 
                     if (isDesktop) {
-                        const isVisible = i >= currentIndex && i < currentIndex + itemsPerPage;
-
-                        if (i === currentIndex + 1) {
-                            // This is the center item of the current view
+                        // The item that should be scaled is the one at the current index + 1
+                        // This logic centers the "active" item when 3 are visible
+                        if (i === (currentIndex + 1) % totalItems) {
                             link.classList.add('md:scale-110', 'z-10');
-                        } else if (isVisible) {
-                            // These are the side items of the current view
-                            link.classList.add('md:opacity-60');
                         } else {
-                            // These items are not in the current view, keep them faded
-                            link.classList.add('md:opacity-60');
+                            link.classList.add('md:opacity-50');
                         }
                     }
                 }
             }
 
-            // Event Listeners
-            prevBtn.addEventListener('click', () => updateCarousel(-1));
-            nextBtn.addEventListener('click', () => updateCarousel(1));
+            // A more robust sliding logic for previous button
+            function slidePrev() {
+                const itemsToMove = -1;
+                currentIndex += itemsToMove;
 
+                // Temporarily disable transition for seamless wrap-around
+                slider.style.transition = 'none';
+
+                if (currentIndex < 0) {
+                    // Move the last item to the beginning
+                    const lastItem = slider.lastElementChild;
+                    slider.prepend(lastItem);
+                    // Adjust transform to show the "new" first item
+                    slider.style.transform = `translateX(-${100/3}%)`;
+                    currentIndex = 0;
+                }
+
+                setTimeout(() => {
+                    slider.style.transition = 'transform 0.5s ease-in-out';
+                    updateCarousel(0); // Update styles and transform
+                }, 10);
+            }
+            
+            let isMoving = false;
+            
+            function move(direction) {
+                if(isMoving) return;
+                isMoving = true;
+                
+                currentIndex += direction;
+                
+                // Rotation logic
+                if (direction === 1 && currentIndex >= totalItems) {
+                    currentIndex = 0;
+                } else if (direction === -1 && currentIndex < 0) {
+                    currentIndex = totalItems - 1;
+                }
+
+                const isDesktop = window.innerWidth >= 768;
+                const itemsPerPage = isDesktop ? 3 : 1;
+                const itemWidthPercent = 100 / itemsPerPage;
+                const offset = -currentIndex * itemWidthPercent;
+                slider.style.transform = `translateX(${offset}%)`;
+                
+                // Apply scaling and opacity effects
+                const slideItems = slider.children;
+
+                for (let i = 0; i < slideItems.length; i++) {
+                    const link = slideItems[i].querySelector('.video-thumb-link');
+                    if (!link) continue;
+                     
+                    link.classList.remove('md:scale-110', 'md:opacity-60', 'z-10');
+
+                    if (isDesktop) {
+                        // The item to be enlarged is the one *after* the first visible item
+                        // In a 3-item view, if currentIndex is 0, item at index 1 is central.
+                        const centralIndex = (currentIndex + 1) % totalItems;
+                        
+                        if (i === centralIndex) {
+                            link.classList.add('md:scale-110', 'z-10');
+                        } else {
+                           link.classList.add('md:opacity-60');
+                        }
+                    }
+                }
+
+
+                setTimeout(() => {
+                    isMoving = false;
+                }, 500); // Same as transition duration
+            }
+
+
+            // Event Listeners
+            prevBtn.addEventListener('click', () => move(-1));
+            nextBtn.addEventListener('click', () => move(1));
+            
             // Adjust carousel on window resize
             window.addEventListener('resize', () => {
                 const sliderTransition = slider.style.transition;
                 slider.style.transition = 'none';
-
-                // Check if currentIndex is still valid after resize
-                const isDesktop = window.innerWidth >= 768;
-                const itemsPerPage = isDesktop ? 3 : 1;
-                const maxIndex = totalItems - itemsPerPage;
-                if (currentIndex > maxIndex) {
-                    currentIndex = maxIndex;
-                }
-
-                updateCarousel(0); // Re-apply styles with potentially corrected index
-
-                // Restore transition after a short delay
+                move(0); // Recalculate positions
                 setTimeout(() => {
                     slider.style.transition = sliderTransition;
                 }, 50);
             });
-
+            
             // Initial setup
-            updateCarousel(0);
+            move(0);
         });
     </script>
 </body>
-
 </html>

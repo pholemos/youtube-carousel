@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Home Product Gallery</title>
+    <style>
+        /* Basic Reset & Typography */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background-image: linear-gradient(to right, #f11313, #e91d0e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        header p {
+            margin-top: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.125rem;
+            color: #a0aec0;
+            /* gray-400 */
+        }
+
+        /* Search Input */
+        .search-container {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        #searchInput {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            background-color: #1a202c;
+            /* gray-800 */
+            color: #e2e8f0;
+            /* gray-200 */
+            border: 1px solid #2d3748;
+            /* gray-700 */
+            border-radius: 0.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #22d3ee;
+            /* cyan-400 */
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.3);
+        }
+
+        /* Product Gallery Grid */
+        #product-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Product Card */
+        .product-card {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            background-color: #1a202c;
+            /* gray-900 */
+            border: 1px solid #2d3748;
+            /* gray-800 */
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(34, 211, 238, 0.3);
+        }
+
+        .product-card__image-container {
+            aspect-ratio: 1 / 1;
+            background-color: #0f172a;
+            /* gray-950 */
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+
+        .product-card__image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-card__image {
+            transform: scale(1.1);
+        }
+
+        .product-card__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+        }
+
+        .product-card__content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+        }
+
+        .product-card__title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            /* gray-200 */
+            transition: color 0.3s ease;
+
+            /* Line Clamp */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+
+        .product-card:hover .product-card__title {
+            color: #22d3ee;
+            /* cyan-400 */
+        }
+
+        .product-card__icon {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover .product-card__icon {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: #718096;
+            /* gray-500 */
+            font-size: 0.875rem;
+        }
+
+        footer p:last-child {
+            margin-top: 0.25rem;
+        }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Smart Home Gadget Gallery</h1>
+            <p>Discover the best smart home devices to automate and upgrade your living space.</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for products..." aria-label="Search for products">
+        </div>
+
+        <main>
+            <div id="product-gallery">
+                <!-- Product cards will be injected here by JavaScript -->
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; <span id="currentYear"></span> Smart Home Selections. All rights reserved.</p>
+            <p>An interactive product showcase.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const products = [
+            { title: "SONOFF M5-2C-80W (Matter) Smart Light Switch, Alexa Wi-Fi Wall Switch, Electric Light Switches, 2 Channel", href: "https://amzn.to/3JDGrxq", img: "https://m.media-amazon.com/images/I/611DbhvRMVL._SX522_.jpg" },
+            { title: "SONOFF S60TPF Wi-Fi Smart Plug (with Energy Monitoring), Schedule On/Off, Energy Saving", href: "https://amzn.to/3LsWiPU", img: "https://m.media-amazon.com/images/I/31VEvFN41tL._MCnd_AC_.jpg" },
+            { title: "Kasa Apple HomeKit Smart Light Switch KS200P3, Single Pole, Neutral Wire Required, 2.4GHz Wi-Fi Light Switch", href: "https://amzn.to/4qPWHvY", img: "https://m.media-amazon.com/images/I/61Z18x94BtL._SX522_.jpg" },
+            { title: "TP-Link TAPO P100 – Wi-Fi Mini Smart Plug, Ideal for Scheduling Linking/Unlinking and Economizing Energy", href: "https://amzn.to/40Dx2ff", img: "https://m.media-amazon.com/images/I/71aEoXvgIwL._AC_SX425_.jpg" },
+            { title: "SONOFF Smart Switch, 2-Switch Panel Home Control, WiFi Smart Scene Wall Switch with Touchscreen, Smart Temperature Function, Lights Control", href: "https://amzn.to/3LzXWPE", img: "https://m.media-amazon.com/images/I/51tcXVUa4JL._AC_SL1500_.jpg" },
+            { title: "SONOFF S60ZBTPF Zigbee Smart Plug - Remote Control, Monitor, Power, Timer, Protec. Overload, Zigbee Repeater, eWeLink", href: "https://amzn.to/43QqlY0", img: "https://m.media-amazon.com/images/I/61hmxpCuCdL._SX342_.jpg" },
+            { title: "SONOFF M5-3C-86W (Matter) Smart Light Switch, Alexa Wi-Fi Wall Switch, Electric Light Switches, 3 Channel", href: "https://amzn.to/43GHkMD", img: "https://m.media-amazon.com/images/I/519giVE5kAL._SX342_.jpg" },
+            { title: "SONOFF Mini Wifi Smart Switch, 2-Way DIY Smart WiFi Switch", href: "https://amzn.to/4eB4K8L", img: "https://m.media-amazon.com/images/I/31CiYg+Ms0L._SX342_.jpg" },
+            { title: "SONOFF NSPanel Smart Scene Wall Switch Smart Display, Built-in Temperature Thermostat And Environmental Sensor, All-In-One Control Center In HMI Panel", href: "https://amzn.to/4nOma6e", img: "https://m.media-amazon.com/images/I/61ERsHNSi5L._AC_SX425_.jpg" },
+            { title: "SONOFF T5 Smart Wall Switch, WiFi Touch Light Switch, Zero Fire Switch, Panel is Removable and Replaceable, Ambient Lighting Mode", href: "https://amzn.to/48Spibu", img: "https://m.media-amazon.com/images/I/51rEiNOQzkL._AC_SX425_.jpg" },
+            { title: "SONOFF NSPanelPro Smart Home Control Panel, Supports Bi-Directional Synchronisation with HA, with ZigbeeGateway, Intelligent Security Functions", href: "https://amzn.to/4opK9tD", img: "https://m.media-amazon.com/images/I/61gROCDydNL._SX342_.jpg" },
+            { title: "SONOFF MINIR4M WiFi Smart Switch 2 Way - WiFi Light Switch Relay Module Supports Matter", href: "https://amzn.to/4oBSvi2", img: "https://m.media-amazon.com/images/I/51iRSPP+VAL._SX342_.jpg" },
+            { title: "SONOFF S60TPF Smart WiFi Socket 16A 4000W, Smart Plug with Current Measurement, Overload Protection, Voice Control", href: "https://amzn.to/3CJ4sz2", img: "https://m.media-amazon.com/images/I/51AbZH+eOJL._SX342_.jpg" },
+            { title: "SONOFF Smart WLAN Wall Switch, Intelligent WiFi Light Switch, M5 Matter 3 Gang Type 86 with Timing, Voice Control", href: " https://amzn.to/4eFnXWx", img: "https://m.media-amazon.com/images/I/519giVE5kAL._SX342_.jpg" },
+            { title: "ZigBee Sonoff SNZB-03 Wireless Motion Sensor It triggers alarms or the switching on off lights", href: "https://amzn.to/4eFh3Rg", img: "https://m.media-amazon.com/images/I/415oJ8qxOcL._AC_SY450_.jpg" },
+            { title: "SONOFF Mini R2 Smart Switch Diy Wifi Smart Switch Module", href: "https://s.click.aliexpress.com/e/_DF3OxGR", img: "https://ae-pic-a1.aliexpress-media.com/kf/H62a1b7de322e4e4db22df1d228d590132.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF TX Wifi Smart Wall Touch Switch T0 T1 T2 T3 EU US UK 1/2/3", href: " https://s.click.aliexpress.com/e/_DBu553N", img: "https://ae-pic-a1.aliexpress-media.com/kf/Scf6c3d89ec84459bbe54d6722c02092ax.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF M5 SwitchMan WiFi Smart Switch Smart Home 80/86/120", href: " https://s.click.aliexpress.com/e/_De3Ic5R", img: "https://ae-pic-a1.aliexpress-media.com/kf/S888b627047564db5a289b508a63133d6B.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF NSPanel Smart WiFi Switch EU/ US Scene Wall Central Switch Thermostat Display", href: "https://s.click.aliexpress.com/e/_DdJNZ1L", img: "https://ae-pic-a1.aliexpress-media.com/kf/S68f09b79597a45e0acf164960063cfef1.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF Ewelink NSPanel Pro Zigbee 3.0 Smart Home Control Panel ", href: "https://s.click.aliexpress.com/e/_DDLfS8x", img: "https://ae-pic-a1.aliexpress-media.com/kf/Sf4998ba4348e4e38a4d9e667420a7311I.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF SNZB-01P Zigbee Wireless Smart Switch Button Smart Scene Switch Two Way Smart Home Control For eWeLink APP", href: "https://s.click.aliexpress.com/e/_DkxNwtB", img: "https://ae-pic-a1.aliexpress-media.com/kf/S3ba07de386e041e48025e602bcfbb09bZ.jpg_220x220q75.jpg_.avif" },
+            { title: "Sonoff Zigbee Dongle-E Zigbee 3.0 Gateway Hub Zigbee Bridge PRO SNZB01P SNZB02P SNZB03P SNZB04 Zigbee ", href: "https://s.click.aliexpress.com/e/_DBxvOaZ", img: "https://ae-pic-a1.aliexpress-media.com/kf/S354c20fa2a8e4535b2366affce50ac3cr.jpg_220x220q75.jpg_.avif" },
+            { title: "WiFi Smart Light Switch, Alexa Smart Switch, WiFi Smart Switch, Smart Switch Compatible with Alexa, Tuya and Smart Life", href: "https://amzn.to/47UuEmC", img: "https://m.media-amazon.com/images/I/61Xn-yKQp0L._SX522_.jpg" },
+            { title: "Tapo P100MA Matter-Enabled Wi-Fi Mini Smart Plug Works with Alexa", href: "https://amzn.to/3LsZURY", img: "https://m.media-amazon.com/images/I/51jxStTHlsL._AC_SX679_.jpg" },
+            { title: "SONOFF Smart Switch, 2-Switch Panel Home Control, WiFi Smart Scene Wall Switch with Touchscreen, Smart Temperature Function, Lights Control", href: "https://amzn.to/4hZGxMv", img: "https://m.media-amazon.com/images/I/51tcXVUa4JL._AC_SL1500_.jpg" },
+            { title: "SONOFF Matter Smart Light Switch, 2.4GHz WiFi Light Switch", href: "https://amzn.to/3LwtENJ", img: "https://m.media-amazon.com/images/I/41gO83r1OoL._SL1500_.jpg" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const gallery = document.getElementById('product-gallery');
+            const searchInput = document.getElementById('searchInput');
+            const yearSpan = document.getElementById('currentYear');
+
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear().toString();
+            }
+
+            const renderProducts = (productsToRender) => {
+                if (!gallery) return;
+                gallery.innerHTML = ''; // Clear existing products
+                if (productsToRender.length === 0) {
+                    gallery.innerHTML = `<p style="color: #a0aec0; grid-column: 1 / -1; text-align: center;">No products found matching your search.</p>`;
+                    return;
+                }
+
+                const galleryFragment = document.createDocumentFragment();
+                productsToRender.forEach(product => {
+                    const cardLink = document.createElement('a');
+                    cardLink.href = product.href;
+                    cardLink.target = '_blank';
+                    cardLink.rel = 'noopener noreferrer';
+                    cardLink.className = 'product-card';
+                    cardLink.setAttribute('aria-label', product.title);
+
+                    cardLink.innerHTML = `
+                        <div class="product-card__image-container">
+                            <img src="${product.img}" alt="" class="product-card__image" loading="lazy">
+                        </div>
+                        <div class="product-card__overlay"></div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">${product.title}</h3>
+                            <div class="product-card__icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4"></path>
+                                    <polyline points="14 4 20 4 20 10"></polyline>
+                                    <line x1="10" y1="14" x2="20" y2="4"></line>
+                                </svg>
+                            </div>
+                        </div>
+                    `;
+                    galleryFragment.appendChild(cardLink);
+                });
+                gallery.appendChild(galleryFragment);
+            };
+
+            const handleSearch = () => {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const filteredProducts = products.filter(product =>
+                    product.title.toLowerCase().includes(searchTerm)
+                );
+                renderProducts(filteredProducts);
+            };
+
+            if (searchInput) {
+                searchInput.addEventListener('input', handleSearch);
+            }
+
+            // Initial render
+            renderProducts(products);
+        });
+    </script>
+</body>
+
+</html>

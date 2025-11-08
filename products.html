@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Product Carousel — DIY Made Easy</title>
+    <style>
+        :root {
+            --gap: 12px;
+            --thumb-height: 150px;
+            --bg: #000;
+            --fg: #fff;
+            --accent: #e63946;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .carousel-wrap {
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 40px;
+        }
+
+        .track {
+            display: flex;
+            gap: var(--gap);
+            transition: transform 500ms cubic-bezier(.2, .9, .2, 1);
+            will-change: transform;
+            align-items: flex-start;
+        }
+
+        .card {
+            flex: 0 0 calc((100% - (var(--gap) * 4)) / 5);
+            box-sizing: border-box;
+            background: #fff;
+            /* white background for product-only images */
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            min-width: 140px;
+            transition: transform 240ms ease, box-shadow 240ms ease;
+        }
+
+        .card:focus-within,
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .thumb {
+            height: var(--thumb-height);
+            display: block;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .meta {
+            padding: 10px;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+
+        .title {
+            color: #000;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .source {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 12px;
+        }
+
+        .controls {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            padding: 0 8px;
+            z-index: 10;
+            /* fixed z-index to show on top */
+        }
+
+        .btn {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--fg);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: inline-grid;
+            place-items: center;
+            cursor: pointer;
+            transition: transform 150ms;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn:active {
+            transform: scale(.96);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--accent);
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 14px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .dot.active {
+            background: var(--accent);
+        }
+
+        @media (max-width:1000px) {
+            .card {
+                flex: 0 0 calc((100% - (var(--gap) * 3)) / 4);
+            }
+        }
+
+        @media (max-width:760px) {
+            .card {
+                flex: 0 0 calc((100% - (var(--gap) * 2)) / 3);
+
+                :root {
+                    --thumb-height: 120px;
+                }
+            }
+        }
+
+        @media (max-width:420px) {
+            .card {
+                flex: 0 0 calc((100% - var(--gap)) / 2);
+
+                :root {
+                    --thumb-height: 110px;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel-wrap" aria-label="Products carousel">
+        <div class="carousel" id="carousel" tabindex="0">
+            <div class="controls">
+                <button class="btn" id="prevBtn" aria-label="Previous product">&larr;</button>
+                <button class="btn" id="nextBtn" aria-label="Next product">&rarr;</button>
+            </div>
+            <div id="track" class="track" role="list"></div>
+            <div class="dots" id="dots" aria-hidden="false"></div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { title: "SONOFF M5-2C-80W (Matter) Smart Light Switch, Alexa Wi-Fi Wall Switch, Electric Light Switches, 2 Channel", href: "https://amzn.to/3JDGrxq", img: "https://m.media-amazon.com/images/I/611DbhvRMVL._SX522_.jpg" },
+            { title: "SONOFF S60TPF Wi-Fi Smart Plug (with Energy Monitoring), Schedule On/Off, Energy Saving", href: "https://amzn.to/3LsWiPU", img: "https://m.media-amazon.com/images/I/31VEvFN41tL._MCnd_AC_.jpg" },
+            { title: "Kasa Apple HomeKit Smart Light Switch KS200P3, Single Pole, Neutral Wire Required, 2.4GHz Wi-Fi Light Switch", href: "https://amzn.to/4qPWHvY", img: "https://m.media-amazon.com/images/I/61Z18x94BtL._SX522_.jpg" },
+            { title: "TP-Link TAPO P100 – Wi-Fi Mini Smart Plug, Ideal for Scheduling Linking/Unlinking and Economizing Energy", href: "https://amzn.to/40Dx2ff", img: "https://m.media-amazon.com/images/I/71aEoXvgIwL._AC_SX425_.jpg" },
+            { title: "SONOFF Smart Switch, 2-Switch Panel Home Control, WiFi Smart Scene Wall Switch with Touchscreen, Smart Temperature Function, Lights Control", href: "https://amzn.to/3LzXWPE", img: "https://m.media-amazon.com/images/I/51tcXVUa4JL._AC_SL1500_.jpg" },
+            { title: "SONOFF S60ZBTPF Zigbee Smart Plug - Remote Control, Monitor, Power, Timer, Protec. Overload, Zigbee Repeater, eWeLink", href: "https://amzn.to/43QqlY0", img: "https://m.media-amazon.com/images/I/61hmxpCuCdL._SX342_.jpg" },
+            { title: "SONOFF M5-3C-86W (Matter) Smart Light Switch, Alexa Wi-Fi Wall Switch, Electric Light Switches, 3 Channel", href: "https://amzn.to/43GHkMD", img: "https://m.media-amazon.com/images/I/519giVE5kAL._SX342_.jpg" },
+            { title: "SONOFF Mini Wifi Smart Switch, 2-Way DIY Smart WiFi Switch", href: "https://amzn.to/4eB4K8L", img: "https://m.media-amazon.com/images/I/31CiYg+Ms0L._SX342_.jpg" },
+            { title: "SONOFF NSPanel Smart Scene Wall Switch Smart Display, Built-in Temperature Thermostat And Environmental Sensor, All-In-One Control Center In HMI Panel", href: "https://amzn.to/4nOma6e", img: "https://m.media-amazon.com/images/I/61ERsHNSi5L._AC_SX425_.jpg" },
+            { title: "SONOFF T5 Smart Wall Switch, WiFi Touch Light Switch, Zero Fire Switch, Panel is Removable and Replaceable, Ambient Lighting Mode", href: "https://amzn.to/48Spibu", img: "https://m.media-amazon.com/images/I/51rEiNOQzkL._AC_SX425_.jpg" },
+            { title: "SONOFF NSPanelPro Smart Home Control Panel, Supports Bi-Directional Synchronisation with HA, with ZigbeeGateway, Intelligent Security Functions", href: "https://amzn.to/4opK9tD", img: "https://m.media-amazon.com/images/I/61gROCDydNL._SX342_.jpg" },
+            { title: "SONOFF MINIR4M WiFi Smart Switch 2 Way - WiFi Light Switch Relay Module Supports Matter", href: "https://amzn.to/4oBSvi2", img: "https://m.media-amazon.com/images/I/51iRSPP+VAL._SX342_.jpg" },
+            { title: "SONOFF S60TPF Smart WiFi Socket 16A 4000W, Smart Plug with Current Measurement, Overload Protection, Voice Control", href: "https://amzn.to/3CJ4sz2", img: "https://m.media-amazon.com/images/I/51AbZH+eOJL._SX342_.jpg" },
+            { title: "SONOFF Smart WLAN Wall Switch, Intelligent WiFi Light Switch, M5 Matter 3 Gang Type 86 with Timing, Voice Control", href: " https://amzn.to/4eFnXWx", img: "https://m.media-amazon.com/images/I/519giVE5kAL._SX342_.jpg" },
+            { title: "ZigBee Sonoff SNZB-03 Wireless Motion Sensor It triggers alarms or the switching on off lights", href: "https://amzn.to/4eFh3Rg", img: "https://m.media-amazon.com/images/I/415oJ8qxOcL._AC_SY450_.jpg" },
+            { title: "SONOFF Mini R2 Smart Switch Diy Wifi Smart Switch Module", href: "https://s.click.aliexpress.com/e/_DF3OxGR", img: "https://ae-pic-a1.aliexpress-media.com/kf/H62a1b7de322e4e4db22df1d228d590132.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF TX Wifi Smart Wall Touch Switch T0 T1 T2 T3 EU US UK 1/2/3", href: " https://s.click.aliexpress.com/e/_DBu553N", img: "https://ae-pic-a1.aliexpress-media.com/kf/Scf6c3d89ec84459bbe54d6722c02092ax.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF M5 SwitchMan WiFi Smart Switch Smart Home 80/86/120", href: " https://s.click.aliexpress.com/e/_De3Ic5R", img: "https://ae-pic-a1.aliexpress-media.com/kf/S888b627047564db5a289b508a63133d6B.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF NSPanel Smart WiFi Switch EU/ US Scene Wall Central Switch Thermostat Display", href: "https://s.click.aliexpress.com/e/_DdJNZ1L", img: "https://ae-pic-a1.aliexpress-media.com/kf/S68f09b79597a45e0acf164960063cfef1.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF Ewelink NSPanel Pro Zigbee 3.0 Smart Home Control Panel ", href: "https://s.click.aliexpress.com/e/_DDLfS8x", img: "https://ae-pic-a1.aliexpress-media.com/kf/Sf4998ba4348e4e38a4d9e667420a7311I.jpg_220x220q75.jpg_.avif" },
+            { title: "SONOFF SNZB-01P Zigbee Wireless Smart Switch Button Smart Scene Switch Two Way Smart Home Control For eWeLink APP", href: "https://s.click.aliexpress.com/e/_DkxNwtB", img: "https://ae-pic-a1.aliexpress-media.com/kf/S3ba07de386e041e48025e602bcfbb09bZ.jpg_220x220q75.jpg_.avif" },
+            { title: "Sonoff Zigbee Dongle-E Zigbee 3.0 Gateway Hub Zigbee Bridge PRO SNZB01P SNZB02P SNZB03P SNZB04 Zigbee ", href: "https://s.click.aliexpress.com/e/_DBxvOaZ", img: "https://ae-pic-a1.aliexpress-media.com/kf/S354c20fa2a8e4535b2366affce50ac3cr.jpg_220x220q75.jpg_.avif" },
+            { title: "WiFi Smart Light Switch, Alexa Smart Switch, WiFi Smart Switch, Smart Switch Compatible with Alexa, Tuya and Smart Life", href: "https://amzn.to/47UuEmC", img: "https://m.media-amazon.com/images/I/61Xn-yKQp0L._SX522_.jpg" },
+            { title: "Tapo P100MA Matter-Enabled Wi-Fi Mini Smart Plug Works with Alexa", href: "https://amzn.to/3LsZURY", img: "https://m.media-amazon.com/images/I/51jxStTHlsL._AC_SX679_.jpg" },
+            { title: "SONOFF Smart Switch, 2-Switch Panel Home Control, WiFi Smart Scene Wall Switch with Touchscreen, Smart Temperature Function, Lights Control", href: "https://amzn.to/4hZGxMv", img: "https://m.media-amazon.com/images/I/51tcXVUa4JL._AC_SL1500_.jpg" },
+            { title: "SONOFF Matter Smart Light Switch, 2.4GHz WiFi Light Switch", href: "https://amzn.to/3LwtENJ", img: "https://m.media-amazon.com/images/I/41gO83r1OoL._SL1500_.jpg" }
+        ];
+
+        const track = document.getElementById('track');
+        const dotsEl = document.getElementById('dots');
+
+        products.forEach((p, idx) => {
+            const a = document.createElement('a');
+            a.href = p.href; a.target = "_blank"; a.rel = "noopener noreferrer"; a.className = "card";
+            a.setAttribute('role', 'listitem'); a.setAttribute('aria-label', p.title);
+            const thumb = document.createElement('div'); thumb.className = 'thumb';
+            thumb.style.backgroundImage = `url("${p.img}")`;
+            const meta = document.createElement('div'); meta.className = 'meta';
+            const title = document.createElement('div'); title.className = 'title'; title.textContent = p.title;
+            const source = document.createElement('div'); source.className = 'source';
+            source.textContent = (p.href.includes('amzn') ? "Amazon" : "AliExpress");
+            meta.appendChild(title); meta.appendChild(source);
+            a.appendChild(thumb); a.appendChild(meta);
+            track.appendChild(a);
+            const dot = document.createElement('div'); dot.className = 'dot'; dot.dataset.index = idx;
+            dot.addEventListener('click', () => goToIndex(idx)); dotsEl.appendChild(dot);
+        });
+
+        let idx = 0, total = products.length, autoplayDelay = 3200, autoplayTimer = null;
+
+        const stepSize = () => {
+            const card = document.querySelector('.card'); if (!card) return 0;
+            const style = getComputedStyle(card); const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 12;
+            const width = card.getBoundingClientRect().width; return width + gap;
+        };
+
+        function update() {
+            if (idx < 0) idx = 0; if (idx > total - 1) idx = total - 1;
+            const s = stepSize(); const transformX = - (s * idx); track.style.transform = `translateX(${transformX}px)`;
+            Array.from(dotsEl.children).forEach(d => d.classList.remove('active'));
+            const activeDot = dotsEl.children[idx]; if (activeDot) activeDot.classList.add('active');
+        }
+        function next() { idx = (idx + 1) % total; update(); }
+        function prev() { idx = (idx - 1 + total) % total; update(); }
+        function goToIndex(i) { idx = i % total; update(); }
+        function startAutoplay() { stopAutoplay(); autoplayTimer = setInterval(() => next(), autoplayDelay); }
+        function stopAutoplay() { if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; } }
+
+        document.getElementById('prevBtn').addEventListener('click', () => { prev(); stopAutoplay(); startAutoplay(); });
+        document.getElementById('nextBtn').addEventListener('click', () => { next(); stopAutoplay(); startAutoplay(); });
+
+        const carousel = document.getElementById('carousel');
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+        carousel.addEventListener('focusin', stopAutoplay);
+        carousel.addEventListener('focusout', startAutoplay);
+        carousel.addEventListener('keydown', (ev) => { if (ev.key === 'ArrowRight') { next(); stopAutoplay(); startAutoplay(); ev.preventDefault(); } if (ev.key === 'ArrowLeft') { prev(); stopAutoplay(); startAutoplay(); ev.preventDefault(); } });
+
+        let touchStartX = 0;
+        track.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; stopAutoplay(); });
+        track.addEventListener('touchend', (e) => { const touchEndX = e.changedTouches[0].screenX; const dx = touchEndX - touchStartX; if (Math.abs(dx) > 30) { if (dx < 0) next(); else prev(); } startAutoplay(); });
+
+        update(); startAutoplay();
+        window.addEventListener('resize', () => update());
+    </script>
+</body>
+
+</html>

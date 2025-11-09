@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY ME Video Gallery</title>
+    <style>
+        /* Google Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        /* CSS Reset and Global Styles */
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --card-bg: #2a2a2a;
+            --primary-text: #e0e0e0;
+            --primary-red: #e50914;
+            --secondary-red: #f40612;
+            --hover-red: #b2070f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Main Container & Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Search Input */
+        #searchInput {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border-radius: 25px;
+            border: 2px solid var(--primary-red);
+            background-color: var(--secondary-bg);
+            color: var(--primary-text);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput::placeholder {
+            color: #888;
+        }
+
+        #searchInput:focus {
+            box-shadow: 0 0 10px var(--secondary-red);
+            border-color: var(--secondary-red);
+        }
+
+        /* Video Gallery Grid */
+        #video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            min-height: 200px;
+            /* For loading state */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-message,
+        .no-results-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        /* Video Card */
+        .video-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--primary-text);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .video-card img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            border-bottom: 3px solid var(--primary-red);
+        }
+
+        .video-card h3 {
+            padding: 1rem;
+            font-size: 1.1rem;
+            color: var(--primary-red);
+            font-weight: 700;
+            flex-grow: 1;
+            /* Ensures cards in the same row have same height */
+        }
+    </style>
+    <link rel="stylesheet" href="/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+
+            <input type="search" id="searchInput" aria-label="Search videos by title"
+                placeholder="Search videos by title...">
+        </header>
+        <main>
+            <div id="video-gallery" aria-live="polite">
+                <div class="loading-message">Loading videos...</div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoUrls = [
+                'https://youtu.be/j2kl1R_49g8', 'https://youtu.be/wHB64ogF-E4', 'https://youtu.be/cSwrO25ETmI',
+                'https://youtu.be/bAbw6YLXkVo', 'https://youtu.be/kW17STBqhak', 'https://youtu.be/nkNrOEl8foc',
+                'https://youtu.be/G0nUe95ThfY', 'https://youtu.be/EZtHFyZEWok', 'https://youtu.be/brZZNT_mrnY',
+                'https://youtu.be/-4TawU1TiMk', 'https://youtu.be/MpverOmA6Ug', 'https://youtu.be/Jtxw6cWn2eg',
+                'https://youtu.be/bPlX7LCNS0Y', 'https://youtu.be/IdtcyMCETN4', 'https://youtu.be/_2BRnh1LF6A'
+
+            ];
+
+            const gallery = document.getElementById('video-gallery');
+            const searchInput = document.getElementById('searchInput');
+            let allVideosData = [];
+
+            /**
+             * Extracts the YouTube video ID from various URL formats.
+             * @param {string} url - The YouTube URL.
+             * @returns {string|null} The video ID or null if not found.
+             */
+            const getYouTubeId = (url) => {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            };
+
+            /**
+             * Fetches video details (like title) from an oEmbed provider.
+             * @param {string} videoUrl - The full YouTube URL.
+             * @returns {Promise<object|null>} A promise that resolves to video data or null on error.
+             */
+            const fetchVideoDetails = async (videoUrl) => {
+                try {
+                    // Using noembed.com as it provides CORS headers
+                    const response = await fetch(`https://noembed.com/embed?url=${videoUrl}`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return await response.json();
+                } catch (error) {
+                    console.error('Failed to fetch video details for:', videoUrl, error);
+                    return null; // Graceful failure
+                }
+            };
+
+            /**
+             * Renders the video gallery in the DOM.
+             * @param {Array<object>} videos - An array of video data objects.
+             */
+            const renderGallery = (videos) => {
+                gallery.innerHTML = ''; // Clear previous content (e.g., loading message)
+                if (videos.length === 0) {
+                    gallery.innerHTML = '<div class="no-results-message">No videos found.</div>';
+                    return;
+                }
+                videos.forEach(video => {
+                    const videoId = getYouTubeId(video.url);
+                    if (videoId) {
+                        const card = document.createElement('a');
+                        card.href = video.url;
+                        card.target = '_blank';
+                        card.rel = 'noopener noreferrer';
+                        card.className = 'video-card';
+                        card.dataset.title = video.title.toLowerCase();
+
+                        card.innerHTML = `
+                            <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Thumbnail for ${video.title}" loading="lazy">
+                            <h3>${video.title}</h3>
+                        `;
+                        gallery.appendChild(card);
+                    }
+                });
+            };
+
+            /**
+             * Initializes the gallery by fetching data for all videos.
+             */
+            const init = async () => {
+                const videoPromises = videoUrls.map(fetchVideoDetails);
+                const results = await Promise.all(videoPromises);
+
+                allVideosData = results.filter(Boolean); // Filter out any null results from failed fetches
+                renderGallery(allVideosData);
+            };
+
+            /**
+             * Handles the search input, filtering displayed videos.
+             */
+            const handleSearch = (event) => {
+                const searchTerm = event.target.value.toLowerCase();
+                const filteredVideos = allVideosData.filter(video =>
+                    video.title.toLowerCase().includes(searchTerm)
+                );
+                renderGallery(filteredVideos);
+            };
+
+            // Event Listeners
+            searchInput.addEventListener('input', handleSearch);
+
+            // Initial load
+            init();
+        });
+    </script>
+    <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>

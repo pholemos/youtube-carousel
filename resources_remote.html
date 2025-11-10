@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources remote control</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      background-color: #111827;
+      color: #f3f4f6;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #ffffff;
+      text-align: center;
+      border-bottom: 2px solid #374151;
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    th,
+    td {
+      border: 1px solid #374151;
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    thead {
+      background-color: #1f2937;
+    }
+
+    th {
+      color: #d1d5db;
+      font-weight: 600;
+    }
+
+    iframe {
+      width: 100%;
+      height: 90px;
+      border-radius: 8px;
+      display: block;
+      border: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #1f2937;
+    }
+
+    tbody tr:hover {
+      background-color: #374151;
+    }
+
+    td:first-child {
+      width: 120px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: "Courier New", Courier, monospace;
+      background-color: #1f2937;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #4b5563;
+    }
+  </style>
+</head>
+
+<body>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Local Path Configuration</th>
+        <th>State Image Configuration</th>
+        <th>Style Configuration</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1VFSC9EdqOKO3402FVf4l82RcqC2wqLWv/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/base.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>Card configurations
+No need to resize or change </pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1iWV4nVWQsfXyjuDL8QMrRr1J-iCKFXwC/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1ULCNHvPm5FSuyBVbg1L0O1aUyuaFbJ8o/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/apple.png</pre>
+        </td>
+        <td>
+          <pre>Apple TV: local/TVRemote/appleon.png</pre>
+        </td>
+        <td>
+          <pre>left: 50%
+top: 11%
+width: 44%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1OtUTUGrA4uoKPR8gG82doSu1oLu7-0Al/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1hLXFo7xHTw2oLEjemLTNZnsTTkUvXj26/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/netflix.png</pre>
+        </td>
+        <td>
+          <pre>Netflix: /local/TVRemote/netflixon.png
+</pre>
+        </td>
+        <td>
+          <pre>left: 50%
+top: 17%
+width: 44%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1trThoINHI13SFc-dxTyB6RqNHH4TvEVt/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1ouFhanEp05IoyLHjhHdaZuoqElIN0iu5/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/prime.png </pre>
+        </td>
+        <td>
+          <pre>Prime Video: /local/TVRemote/primeon.png</pre>
+        </td>
+        <td>
+          <pre>left: 50%
+top: 23%
+width: 44%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1FMrYS3irEFonpamCOoYxy9G4AuLOi3Ev/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/11PIHKBDYXkUAIespLhj6FBT9FY5-7fcx/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/youtube.png </pre>
+        </td>
+        <td>
+          <pre>YouTube: /local/TVRemote/youtubeon.png</pre>
+        </td>
+        <td>
+          <pre>left: 50%
+top: 29%
+width: 44%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1iik4TUaO8lYB3_c-K5RfYkIiiWpY62jU/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1uXHwGqTy7VbKoHMZXp1CgWgkdv-G6bVi/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/max.png</pre>
+        </td>
+        <td>
+          <pre>Max: /local/TVRemote/maxon.png</pre>
+        </td>
+        <td>
+          <pre>eft: 50%
+top: 35%
+width: 44%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1Jw4IvPjp3AaWpfGwAa6AzQ10axIIFEtZ/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1O1_2ZfgrpIZxciQ98P6IamvkD97Q0jjt/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/hdmi1.png</pre>
+        </td>
+        <td>
+          <pre>HDMI1: /local/TVRemote/hdmi1on.png
+</pre>
+        </td>
+        <td>
+          <pre>left: 39%
+top: 41.7%
+width: 22%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1w-KRn0Tk-TZfR3zcXUGaLUqJU5aII5D8/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1nqpWyJG6BYpgVRUWYVFN0hG1HQ3IGCZo/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/hdmi2.png </pre>
+        </td>
+        <td>
+          <pre>HDMI1: /local/TVRemote/hdmi2on.png</pre>
+        </td>
+        <td>
+          <pre>eft: 61%
+top: 41.6%
+width: 22%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1jlettEkeR6PLZy4phLfzYXOBW9UbRWwN/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/channelup.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>eft: 34.2%
+top: 49%
+width: 14%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1KCRK0xHgLSfFIYApXWtr6kvFGgqhTrPT/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/channeldown.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 34.2%
+top: 55%
+width: 14%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1oZTv7o8oZKTZylpMM-ejtWXVYFnQIzSk/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>ocal/TVRemote/home.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 50.5%
+top: 49%
+width: 14%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1FyMChnadME9lwl5UUs5UWRwPTB4-RCSD/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/menu.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 50%
+top: 54.8%
+width: 14%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1eswT3iFJ-ky-lvVQZEl2ZqAaNrNkO078/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/volumeup.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 65%
+top: 48.8%
+width: 14%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/17bW01F1UeR4wfTK8JiGZL6ojnoy4PWO1/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/volumedown.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>eft: 64.9%
+top: 55%
+width: 14%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1jPA-e_IKD-T3-Wrmxy-f4fFsI3E8Pa8u/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>ocal/TVRemote/play.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 34%
+top: 63.3%
+width: 13.7%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1OGgrQDdh7tvMJXmhbaZ_8PnEXhsAjI48/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/arrowup.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 49.5%
+top: 63.2%
+width: 13.7%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1HNiRnTPBffyBPPbBjbAg8Ut84dBFZa2G/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>ocal/TVRemote/pause.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 65.5%
+top: 63.2%
+width: 13.7%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1n5n3IZVrfzTG7dlSIQYPajNtOVl0WT93/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>ocal/TVRemote/arrowleft.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>eft: 34%
+top: 72.2%
+width: 13</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1ApozWrztO0KKwnYMDyl2PueVBYmWEdiv/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/enter.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 49.2%
+top: 72.1%
+width: 13.7%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1BToPqDwB0WjkzyfwsLwuwcvUrLj0Nl1G/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/arrowright.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 65.3%
+top: 72.1%
+width: 13.7%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1qwgLgjexB-yI9m_SAefEMKn3L5E9nxTn/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/back.png</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 34%
+top: 80.6%
+width: 13.7%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1nblDXQmWPHbygM3PojRyUwbxb9rRvNnl/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/arrowdown.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 49.2%
+top: 80.6%
+width: 13.7%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1D7Ac7-5hYLQzmKaibgD3JSn2zeDxMVmc/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>local/TVRemote/lights.png </pre>
+        </td>
+        <td>
+          <pre>&quot;off&quot;: local/TVRemote/lights.png</pre>
+        </td>
+        <td>
+          <pre>left: 65.3%
+top: 80.5%
+width: 13.7%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1WGM1HeH8RaixNe-pNBEgsbCtpxCkwmT6/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>/local/TVRemote/power.png
+</pre>
+        </td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>left: 34%
+top: 89%
+width: 13.7%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1V32VOg4jcbmpaRplMEh3dbSaItAkH9v7/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre>/local/TVRemote/poweron.png </pre>
+        </td>
+        <td>
+          <pre>&quot;on&quot;: /local/TVRemote/poweron.png</pre>
+        </td>
+        <td>
+          <pre>left: 34%
+top: 89%
+width: 13.7%</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1_lR7Zy42VNIm8Cu82nCScixsRlNHtWMY/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/14J86jYOUE89z_Jt1Ba1_lOEtYrAhfAMt/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>&quot;on&quot;: local/TVRemote/peopleon.png
+&quot;off&quot;: local/TVRemote/people.png
+</pre>
+        </td>
+        <td>
+          <pre>left: 49.2%
+top: 89%
+width: 13.7%
+</pre>
+        </td>
+      </tr>
+
+      <tr>
+        <td><iframe src="https://drive.google.com/file/d/1eSMlLG3-nAW1ZTCCt3aY_-gV5X8IRBYD/preview"
+            style="margin-bottom: 8px;"></iframe><iframe
+            src="https://drive.google.com/file/d/1VKQ0JBxLFV7xEGM88oEwGu9ltaOhYUYl/preview"
+            style="margin-bottom: 8px;"></iframe></td>
+        <td>
+          <pre></pre>
+        </td>
+        <td>
+          <pre>&quot;on&quot;: local/TVRemote/alarmon.png
+&quot;off&quot;: local/TVRemote/alarm.png
+</pre>
+        </td>
+        <td>
+          <pre>left: 65.5%
+top: 89%
+width: 14%
+</pre>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</body>
+
+</html>

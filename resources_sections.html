@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    aspectRatio: {
+                        '16/9': '16 / 9',
+                    },
+                },
+            },
+            plugins: [
+                function ({ addComponents }) {
+                    addComponents({
+                        '.aspect-w-16': { position: 'relative', paddingBottom: '56.25%' },
+                        '.aspect-h-9': {},
+                        '.aspect-w-16 > *': { position: 'absolute', height: '100%', width: '100%', top: '0', right: '0', bottom: '0', left: '0' },
+                    })
+                }
+            ],
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .accordion-toggle .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-300 font-sans p-4 sm:p-6 md:p-8">
+    <main class="max-w-7xl mx-auto">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-center text-red-500 my-8 sm:my-12 tracking-tight">Resources
+        </h1>
+
+        <div class="mb-8">
+            <input type="search" id="search-input" placeholder="Search sections by title..."
+                class="w-full p-4 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition" />
+        </div>
+
+        <div class="bg-slate-800 rounded-xl p-6 mb-8">
+
+            <ul class="space-y-2 list-disc list-inside" id="toc-list">
+                <li data-title="Christmas dashboard"><a href="#section-christmas-dashboard"
+                        class="text-slate-300 hover:text-red-400 transition-colors duration-200">Christmas dashboard</a>
+                </li>
+                <li data-title="Alarm clock dashboard"><a href="#section-alarm-clock-dashboard"
+                        class="text-slate-300 hover:text-red-400 transition-colors duration-200">Alarm clock
+                        dashboard</a></li>
+                <li data-title="Remote control dashboard"><a href="#section-remote-control-dashboard"
+                        class="text-slate-300 hover:text-red-400 transition-colors duration-200">Remote control
+                        dashboard</a></li>
+            </ul>
+        </div>
+
+
+        <div class="space-y-4" id="sections-container">
+
+            <div class="border border-slate-700 rounded-lg overflow-hidden" id="section-christmas-dashboard"
+                data-title="Christmas dashboard">
+                <button
+                    class="accordion-toggle w-full flex justify-between items-center p-4 bg-slate-700/50 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 text-left">
+                    <div class="flex items-center min-w-0">
+                        <img src="https://i9.ytimg.com/vi_webp/bPlX7LCNS0Y/mqdefault.webp?v=67780d71&amp;sqp=CMCZ1MgG&amp;rs=AOn4CLD-h0WFOMCM7AM44ydfg2aDATS33Q"
+                            alt="Thumbnail for Christmas dashboard"
+                            class="w-12 h-12 object-cover rounded-md mr-4 flex-shrink-0">
+                        <span class="font-medium text-red-500 break-all truncate">Christmas dashboard</span>
+                    </div>
+                    <svg class="accordion-icon w-6 h-6 text-red-500 flex-shrink-0 ml-4" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="accordion-content bg-slate-800">
+                    <div class="p-4 md:p-8 border-t border-slate-700">
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                            <div
+                                class="lg:col-span-3 aspect-w-16 aspect-h-9 bg-slate-900 rounded-lg overflow-hidden shadow-lg">
+                                <img src="https://i9.ytimg.com/vi_webp/bPlX7LCNS0Y/mqdefault.webp?v=67780d71&amp;sqp=CMCZ1MgG&amp;rs=AOn4CLD-h0WFOMCM7AM44ydfg2aDATS33Q"
+                                    alt="Preview for Christmas dashboard" class="w-full h-full object-contain">
+                            </div>
+                            <div class="lg:col-span-2 flex flex-col">
+                                <h2 class="text-2xl sm:text-3xl font-bold tracking-wide text-red-500">
+                                    CHRISTMAS DASHBOARD
+                                </h2>
+                                <p class="mt-4 text-white">Here you’ll find everything you need to recreate this
+                                    Christmas-themed Home Assistant dashboard.<br />I’ve included all the resources used
+                                    in the video, such as:<br /><br />🎄 Images and icons<br />✨ Style and theme
+                                    configuration<br />📂 File paths and setup instructions<br /><br />Follow the
+                                    step-by-step tutorial in the video and use these resources to easily implement this
+                                    festive dashboard in your own Home Assistant setup. It’s designed to be simple to
+                                    follow, even if you’re just getting started.<br /><br />Bring some holiday spirit to
+                                    your smart home — and most of all, have fun creating it! 🎅🏼✨<br /></p>
+
+                                <div class="mt-6">
+                                    <h3 class="text-lg font-semibold text-red-500 mb-4">Downloadable Materials</h3>
+                                    <ul class="space-y-3">
+
+                                        <li class="flex items-start">
+                                            <svg class="w-5 h-5 text-red-500 mr-3 mt-1 flex-shrink-0"
+                                                xmlns="http://www.w.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                                                <path
+                                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                                            </svg>
+                                            <a href="https://drive.google.com/file/d/15AQLly2wR1Y1wWPQjWteskmiIt3FwcaM/view?usp=drive_link"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="text-red-400 hover:text-red-300 break-all transition-colors duration-200">Images</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mt-8 border-t border-slate-700 pt-8">
+                            <iframe src="https://pholemos.github.io/youtube-carousel/resources_christmas.html"
+                                class="w-full h-96 md:h-[600px] rounded-lg border border-slate-700"
+                                title="Embedded page for Christmas dashboard" allowfullscreen></iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-slate-700 rounded-lg overflow-hidden" id="section-alarm-clock-dashboard"
+                data-title="Alarm clock dashboard">
+                <button
+                    class="accordion-toggle w-full flex justify-between items-center p-4 bg-slate-700/50 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 text-left">
+                    <div class="flex items-center min-w-0">
+                        <img src="https://i9.ytimg.com/vi_webp/brZZNT_mrnY/mqdefault.webp?v=678d3ad4&amp;sqp=CMCZ1MgG&amp;rs=AOn4CLBGdjVTAWI7sNHL2BUBBHBdnyI7JA"
+                            alt="Thumbnail for Alarm clock dashboard"
+                            class="w-12 h-12 object-cover rounded-md mr-4 flex-shrink-0">
+                        <span class="font-medium text-red-500 break-all truncate">Alarm clock dashboard</span>
+                    </div>
+                    <svg class="accordion-icon w-6 h-6 text-red-500 flex-shrink-0 ml-4" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="accordion-content bg-slate-800">
+                    <div class="p-4 md:p-8 border-t border-slate-700">
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                            <div
+                                class="lg:col-span-3 aspect-w-16 aspect-h-9 bg-slate-900 rounded-lg overflow-hidden shadow-lg">
+                                <img src="https://i9.ytimg.com/vi_webp/brZZNT_mrnY/mqdefault.webp?v=678d3ad4&amp;sqp=CMCZ1MgG&amp;rs=AOn4CLBGdjVTAWI7sNHL2BUBBHBdnyI7JA"
+                                    alt="Preview for Alarm clock dashboard" class="w-full h-full object-contain">
+                            </div>
+                            <div class="lg:col-span-2 flex flex-col">
+                                <h2 class="text-2xl sm:text-3xl font-bold tracking-wide text-red-500">
+                                    ALARM CLOCK DASHBOARD
+                                </h2>
+                                <p class="mt-4 text-white">Here you’ll find all the resources you need to recreate this
+                                    Smart Alarm Clock dashboard for Home Assistant — an alarm that can open YouTube,
+                                    turn on your lights, or even start making your coffee ☕✨<br /><br />Included in this
+                                    pack:<br /><br />⏰ Images and icons used in the UI<br />🎨 Style and theme
+                                    configuration<br />📂 Correct file paths and setup instructions<br /><br />Simply
+                                    follow the step-by-step video tutorial and use these resources to easily build this
+                                    smart alarm clock in your own Home Assistant system. Whether you’re a beginner or
+                                    already familiar with dashboards, you’ll be able to customise it to wake you up the
+                                    perfect way.<br /><br />Enjoy building it — and enjoy waking up smarter! 🚀<br />
+                                </p>
+
+                                <div class="mt-6">
+                                    <h3 class="text-lg font-semibold text-red-500 mb-4">Downloadable Materials</h3>
+                                    <ul class="space-y-3">
+
+                                        <li class="flex items-start">
+                                            <svg class="w-5 h-5 text-red-500 mr-3 mt-1 flex-shrink-0"
+                                                xmlns="http://www.w.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                                                <path
+                                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                                            </svg>
+                                            <a href="https://drive.google.com/file/d/16_4abKdP6XILIx-gRK1YwFySW27CF-QI/view?usp=sharing"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="text-red-400 hover:text-red-300 break-all transition-colors duration-200">Helpers
+                                                and scripts</a>
+                                        </li>
+
+                                        <li class="flex items-start">
+                                            <svg class="w-5 h-5 text-red-500 mr-3 mt-1 flex-shrink-0"
+                                                xmlns="http://www.w.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                                                <path
+                                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                                            </svg>
+                                            <a href="https://drive.google.com/file/d/1GdLvgLxUxGL-iPftcRVqdioUcvNQcydT/view?usp=drive_link"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="text-red-400 hover:text-red-300 break-all transition-colors duration-200">Images</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mt-8 border-t border-slate-700 pt-8">
+                            <iframe src="https://pholemos.github.io/youtube-carousel/resources_clock.html"
+                                class="w-full h-96 md:h-[600px] rounded-lg border border-slate-700"
+                                title="Embedded page for Alarm clock dashboard" allowfullscreen></iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-slate-700 rounded-lg overflow-hidden" id="section-remote-control-dashboard"
+                data-title="Remote control dashboard">
+                <button
+                    class="accordion-toggle w-full flex justify-between items-center p-4 bg-slate-700/50 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 text-left">
+                    <div class="flex items-center min-w-0">
+                        <img src="https://i9.ytimg.com/vi_webp/-4TawU1TiMk/mqdefault.webp?v=67841b62&amp;sqp=CMCZ1MgG&amp;rs=AOn4CLDNYXx5vqxxFjQ9lLnC5pYNbHZV_w"
+                            alt="Thumbnail for Remote control dashboard"
+                            class="w-12 h-12 object-cover rounded-md mr-4 flex-shrink-0">
+                        <span class="font-medium text-red-500 break-all truncate">Remote control dashboard</span>
+                    </div>
+                    <svg class="accordion-icon w-6 h-6 text-red-500 flex-shrink-0 ml-4" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div class="accordion-content bg-slate-800">
+                    <div class="p-4 md:p-8 border-t border-slate-700">
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                            <div
+                                class="lg:col-span-3 aspect-w-16 aspect-h-9 bg-slate-900 rounded-lg overflow-hidden shadow-lg">
+                                <img src="https://i9.ytimg.com/vi_webp/-4TawU1TiMk/mqdefault.webp?v=67841b62&amp;sqp=CMCZ1MgG&amp;rs=AOn4CLDNYXx5vqxxFjQ9lLnC5pYNbHZV_w"
+                                    alt="Preview for Remote control dashboard" class="w-full h-full object-contain">
+                            </div>
+                            <div class="lg:col-span-2 flex flex-col">
+                                <h2 class="text-2xl sm:text-3xl font-bold tracking-wide text-red-500">
+                                    REMOTE CONTROL DASHBOARD
+                                </h2>
+                                <p class="mt-4 text-white">Here you’ll find all the resources you need to recreate this
+                                    LG TV Remote Control dashboard for Home Assistant — giving you an intuitive,
+                                    stylish, and fully customisable interface to control your TV and access additional
+                                    smart features.<br /><br />Included in this pack:<br /><br />📺 Images and icons
+                                    used in the interface<br />🎨 Style and theme configuration for a clean and modern
+                                    look<br />📂 Correct file paths and setup instructions to ensure everything works
+                                    smoothly<br /><br />Just follow the step-by-step video tutorial and use these
+                                    resources to easily build this LG TV Remote Control dashboard in your own Home
+                                    Assistant setup. Whether you’re new to dashboards or already experienced, you’ll be
+                                    able to personalise it to fit your home.<br /><br />Enjoy building it — and enjoy
+                                    controlling your TV the smart way! 🎉<br /></p>
+
+                                <div class="mt-6">
+                                    <h3 class="text-lg font-semibold text-red-500 mb-4">Downloadable Materials</h3>
+                                    <ul class="space-y-3">
+
+                                        <li class="flex items-start">
+                                            <svg class="w-5 h-5 text-red-500 mr-3 mt-1 flex-shrink-0"
+                                                xmlns="http://www.w.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                                                <path
+                                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                                            </svg>
+                                            <a href="https://drive.google.com/file/d/1kQ5CqnDQzhBbvpL4jJ1ZG84nztBpFhOF/view?usp=sharing"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="text-red-400 hover:text-red-300 break-all transition-colors duration-200">Images</a>
+                                        </li>
+
+                                        <li class="flex items-start">
+                                            <svg class="w-5 h-5 text-red-500 mr-3 mt-1 flex-shrink-0"
+                                                xmlns="http://www.w.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path
+                                                    d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                                                <path
+                                                    d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                                            </svg>
+                                            <a href="https://drive.google.com/file/d/1ZKlk5Krnn_kJo4x81UjL8XkDl3cL5JT1/view?usp=sharing"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="text-red-400 hover:text-red-300 break-all transition-colors duration-200">PDF</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="mt-8 border-t border-slate-700 pt-8">
+                            <iframe src="https://pholemos.github.io/youtube-carousel/resources_remote.html"
+                                class="w-full h-96 md:h-[600px] rounded-lg border border-slate-700"
+                                title="Embedded page for Remote control dashboard" allowfullscreen></iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Accordion Logic
+            const accordions = document.querySelectorAll('.accordion-toggle');
+            accordions.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('.accordion-icon');
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        // Close other accordions
+                        accordions.forEach(otherButton => {
+                            if (otherButton !== button) {
+                                otherButton.nextElementSibling.style.maxHeight = null;
+                                otherButton.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+            // Auto-open first section
+            if (accordions.length > 0) {
+                const firstButton = accordions[0];
+                const firstContent = firstButton.nextElementSibling;
+                const firstIcon = firstButton.querySelector('.accordion-icon');
+                firstContent.style.maxHeight = firstContent.scrollHeight + 'px';
+                firstIcon.style.transform = 'rotate(180deg)';
+            }
+
+            // Search Logic
+            const searchInput = document.getElementById('search-input');
+            const sectionsContainer = document.getElementById('sections-container');
+            const tocList = document.getElementById('toc-list');
+
+            if (searchInput && sectionsContainer && tocList) {
+                const sections = Array.from(sectionsContainer.children);
+                const tocItems = Array.from(tocList.children);
+
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+
+                    sections.forEach(section => {
+                        const title = section.dataset.title.toLowerCase();
+                        section.style.display = title.includes(searchTerm) ? '' : 'none';
+                    });
+
+                    tocItems.forEach(item => {
+                        const title = item.dataset.title.toLowerCase();
+                        item.style.display = title.includes(searchTerm) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

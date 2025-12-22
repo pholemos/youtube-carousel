@@ -460,5 +460,54 @@
     "imgLink": "https://m.media-amazon.com/images/I/61PCfwGG4SL._AC_SL1500_.jpg",
     "shop": "amazon.es",
     "country": "Spain"
+  },
+  {
+    "title": "SONOFF M5 Matter Smart Wall Switch ESP32 Two-way",
+    "url": "https://s.click.aliexpress.com/e/_c4oPjcPT",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/S467cb109a52648b38fd8ee252c74e923T.jpg_220x220q75.jpg_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
+  },
+  {
+    "title": "SONOFF S60 EU SONOFF Wifi Socket Wifi Smart Socket Overload Protection",
+    "url": "https://s.click.aliexpress.com/e/_c4EfzM0H",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/S62a6d5ffc21c468394a880c767d7d6d30.jpg_220x220q75.jpg_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
+  },
+  {
+    "title": "SONOFF SNZB-02P Zigbee Temperature and Humidity Sensor",
+    "url": "https://s.click.aliexpress.com/e/_c3noDUTF",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/S9b185167a7424213b18fe060f8b7e8b9g.png_220x220.png_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
+  },
+  {
+    "title": "SONOFF ZBMINI-L2 Smart Switch Module No Neutral Wire Required",
+    "url": "https://s.click.aliexpress.com/e/_c3h9Kn4v",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/Scdd6a44f225d44e2a63c3fb824745e37l.jpg_220x220q75.jpg_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
+  },
+  {
+    "title": "Shelly 1 Gen3",
+    "url": "https://s.click.aliexpress.com/e/_c3oy11TJ",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/E446f58a05ffc4605a0bdee5a8d1308baA.jpg_220x220q75.jpg_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
+  },
+  {
+    "title": "Shelly Plus 1 Smart Remote Switch for controlling lights, garage doors, irrigation systems, and air conditioning with Wi-Fi and Bluetooth",
+    "url": "https://s.click.aliexpress.com/e/_c32Iyq05",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/E1e141a6b711a41e08539c833a3cafa3aV.jpg_220x220q75.jpg_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
+  },
+  {
+    "title": "Shelly 1PM Gen4",
+    "url": "https://s.click.aliexpress.com/e/_c38BX06D",
+    "imgLink": "https://ae-pic-a1.aliexpress-media.com/kf/E0b213544defe4ab0bc7b03c39e671a9b9.jpg_220x220q75.jpg_.avif",
+    "shop": "Aliexpress.com",
+    "country": "Global"
   }
 ]
